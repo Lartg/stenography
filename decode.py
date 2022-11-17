@@ -14,7 +14,9 @@ from PIL import Image
 
 def decode_image(path_to_png):
     """
-    TODO: Add docstring and complete implementation.
+    This function takes an encoded image, 
+    Decodes a hidden image based upon the red channel values,
+    Then saves the decoded image to your disc
     """
     # Open the image using PIL:
     encoded_image = Image.open(path_to_png)
@@ -32,25 +34,25 @@ def decode_image(path_to_png):
         for x in range(x_size):
             ''' sort pixels of encoded image here'''
             # get the pixel
-            red_channel.getpixel((x,y))
+            red_value = red_channel.getpixel((x,y))
             # convert the red value to a bit
-            # get Least Significant Bit
-            # sort based on LSB
-            pass
-
-    
-
-
-
+            red_value = format(red_value, 'b')
+            # sort based on Least Significant Bit
+            if red_value[-1] == '1':
+                decoded_image.putpixel((x,y), (0,0,0))
+            else:
+                decoded_image.putpixel((x,y), (255,255,255))
+            
 
     # DO NOT MODIFY. Save the decoded image to disk:
-    # uncomment when done
-    # decoded_image.save("decoded_image.png")
+    decoded_image.save("decoded_image.png")
 
 
 def encode_image(path_to_png):
     """
-    TODO: Add docstring and complete implementation.
+    This function takes an image,
+    Edits the red channel of the image to encode a secret image,
+    Then saves the encoded image to your disc.
     """
     pass
 
