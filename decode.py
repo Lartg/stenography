@@ -9,7 +9,7 @@ Deliverables:
     3. Your own image encoded with hidden secret text!
 """
 # TODO: Run `pip3 install Pillow` before running the code.
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 
 
 def decode_image(path_to_png):
@@ -48,20 +48,28 @@ def decode_image(path_to_png):
     decoded_image.save("decoded_image.png")
 
 
-def encode_image(path_to_png):
+def encode_image(path_to_png, text_to_write: str):
     """
     This function takes an image,
-    Edits the red channel of the image to encode a secret image,
+    Edits the red channel of the image to encode a secret message,
     Then saves the encoded image to your disc.
     """
     pass
 
 
-def write_text(text_to_write):
+def write_text(text_to_write, size):
     """
-    TODO: Add docstring and complete implementation.
+    Converts text to an image of text to act as a stencil for secret message encoding
     """
+
+    secret_message = Image.new("RGB", size, (255,255,255))
+
+    text = ImageDraw.Draw(secret_message)
+    
+    text.multiline_text((10, 10), text_to_write, fill=(0, 0, 0))
+
+    secret_message.save("secret_message.png")
     pass
 
 if __name__ == "__main__":
-    decode_image('encoded_sample.png')
+    write_text('This is String', (500,500))
