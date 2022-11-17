@@ -28,8 +28,20 @@ def decode_image(path_to_png):
     x_size, y_size = encoded_image.size
 
     # TODO: Using the variables declared above, replace `print(red_channel)` with a complete implementation:
-    for red_pixel in red_channel.getdata():
-        print(red_pixel)
+    for y in range(y_size):
+        for x in range(x_size):
+            ''' sort pixels of encoded image here'''
+            # get the pixel
+            red_channel.getpixel((x,y))
+            # convert the red value to a bit
+            # get Least Significant Bit
+            # sort based on LSB
+            pass
+
+    
+
+
+
 
     # DO NOT MODIFY. Save the decoded image to disk:
     # uncomment when done
