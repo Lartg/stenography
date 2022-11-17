@@ -29,7 +29,7 @@ def decode_image(path_to_png):
     pixels = decoded_image.load()
     x_size, y_size = encoded_image.size
 
-    # TODO: Using the variables declared above, replace `print(red_channel)` with a complete implementation:
+    # construct decoded image
     for y in range(y_size):
         for x in range(x_size):
             ''' sort pixels of encoded image here'''
@@ -54,7 +54,48 @@ def encode_image(path_to_png, text_to_write: str):
     Edits the red channel of the image to encode a secret message,
     Then saves the encoded image to your disc.
     """
-    pass
+
+    # load image that will be encoded
+    base_image = Image.open(path_to_png)
+
+
+    # create text template
+    x_size, y_size = base_image.size
+    secret_message = write_text(text_to_write, (x_size, y_size))
+
+    # draw over the base image red channel using the template
+    for y in range(y_size):
+        for x in range(x_size):
+            # prep base image for editing
+            # get pixel
+            # convert red channel to string bit
+
+            # get pixel of template
+            pixel = secret_message.getpixel((x,y))
+    
+            # check if text present
+            if pixel[0] == 255:
+                # change Least Significant Bit of red channel to 1
+
+
+                # convert red channel string to number
+
+
+                # rewrite pixel
+                
+                pass
+            else:
+                # change Least Significant Bit of red channel to 0
+
+
+                # convert red channel string to number
+
+
+                # rewrite pixel
+                pass
+
+    # save encoded image
+    base_image.save("encoded_image.png")
 
 
 def write_text(text_to_write, size):
@@ -68,8 +109,7 @@ def write_text(text_to_write, size):
     
     text.multiline_text((10, 10), text_to_write, fill=(0, 0, 0))
 
-    secret_message.save("secret_message.png")
-    pass
+    return secret_message
 
 if __name__ == "__main__":
-    write_text('This is String', (500,500))
+    encode_image('encoded_sample.png', 'this is string')
