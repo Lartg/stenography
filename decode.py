@@ -9,7 +9,7 @@ Deliverables:
     3. Your own image encoded with hidden secret text!
 """
 # TODO: Run `pip3 install Pillow` before running the code.
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw
 
 
 def decode_image(path_to_png):
@@ -66,32 +66,41 @@ def encode_image(path_to_png, text_to_write: str):
     # draw over the base image red channel using the template
     for y in range(y_size):
         for x in range(x_size):
-            # prep base image for editing
+            ''' prep base image for editing'''
             # get pixel
-            # convert red channel to string bit
+            base_pixel = base_image.getpixel((x,y))
 
+            # convert red channel to string bit
+            base_pixel_red_channel = format(base_pixel[0], 'b')
+
+            # drop least Significant Bit
+            base_pixel_red_channel = base_pixel_red_channel[:-1]
+
+            ''' edit base image using template reference'''
             # get pixel of template
-            pixel = secret_message.getpixel((x,y))
+            message_pixel = secret_message.getpixel((x,y))
     
             # check if text present
-            if pixel[0] == 255:
-                # change Least Significant Bit of red channel to 1
-
+            if message_pixel[0] == 255:
+                # change Least Significant Bit of red channel to 0
+                base_pixel_red_channel += '0'
 
                 # convert red channel string to number
-
+                base_pixel_red_channel = int(base_pixel_red_channel, 2)
 
                 # rewrite pixel
-                
+                base_image.putpixel((x,y), (base_pixel_red_channel, base_pixel[1], base_pixel[2]))
+
                 pass
             else:
-                # change Least Significant Bit of red channel to 0
-
+                # change Least Significant Bit of red channel to 1
+                base_pixel_red_channel += '1'
 
                 # convert red channel string to number
-
+                base_pixel_red_channel = int(base_pixel_red_channel, 2)
 
                 # rewrite pixel
+                base_image.putpixel((x,y), (base_pixel_red_channel, base_pixel[1], base_pixel[2]))
                 pass
 
     # save encoded image
@@ -112,4 +121,5 @@ def write_text(text_to_write, size):
     return secret_message
 
 if __name__ == "__main__":
-    encode_image('encoded_sample.png', 'this is string')
+    encode_image('encoded_sample.png', 'This is string!')
+    decode_image('encoded_image.png')
